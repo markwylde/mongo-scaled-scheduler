@@ -37,6 +37,22 @@ test('createScheduler: immediate execution', async (t) => {
   };
 });
 
+test('createScheduler: duplicate job only runs once', async (t) => {
+  t.plan(1);
+
+  const scheduler = await createTestScheduler();
+
+  const job = async () => {
+    t.pass('Job executed immediately');
+  };
+  await scheduler.addJob(job);
+  await scheduler.addJob(job);
+
+  return () => {
+    scheduler.close();
+  };
+});
+
 test('createScheduler: scheduled execution with time', async (t) => {
   t.plan(1);
 
@@ -103,7 +119,51 @@ test('createScheduler: multiple schedules do not run the same job', async (t) =>
   await scheduler.addJob(job, { interval: 1000 });
   await scheduler.addJob(job, { interval: 1000 });
 
-  setTimeout(() => {
+  return () => {
     scheduler.close();
-  }, 3000);
+  };
+});
+
+test('createScheduler: job throws an error but still runs again', async (t) => {
+  t.plan(4);
+
+  const scheduler = await createTestScheduler();
+
+  scheduler.on('error', (error) => {
+    t.equal(error.message, 'Job threw an error');
+  });
+
+  const job = async () => {
+    t.pass('runs job');
+    throw new Error('Job threw an error');
+  };
+
+  await scheduler.addJob(job, { interval: 1000 });
+
+  await new Promise(resolve => setTimeout(resolve, 1500));
+
+  return () => {
+    scheduler.close();
+  };
+});
+
+test('createScheduler: job is already running', async (t) => {
+  t.plan(2);
+
+  const scheduler1 = await createTestScheduler();
+  const scheduler2 = await createTestScheduler();
+
+  const job = async () => {
+    t.pass('Job executed once');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+  };
+
+  await scheduler1.addJob(job, { interval: 1000 });
+  await scheduler2.addJob(job, { interval: 1000 });
+
+  setTimeout(() => {
+    scheduler1.close();
+    scheduler2.close();
+    t.pass();
+  }, 2500);
 });
