@@ -13,7 +13,8 @@ import { MongoClient } from 'mongodb';
 import createScheduler from 'mongo-scaled-schedulder';
 
 const mongoDbUrl = 'mongodb://localhost:27017/mydatabase';
-const db = await MongoClient.connect(mongoDbUrl);
+const client = await MongoClient.connect(mongoDbUrl);
+const db = client.db();
 
 const scheduler = await createScheduler({
   collection: db.collection('scheduler'),

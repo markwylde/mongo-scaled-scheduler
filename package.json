@@ -6,10 +6,16 @@
   "main": "lib/index.js",
   "types": "libindex.d.ts",
   "scripts": {
-    "test": "node test"
+    "test": "c8 node test"
   },
   "keywords": [
-    "schedule", "scheduler", "task", "job", "mongo", "scaled", "distributed"
+    "schedule",
+    "scheduler",
+    "task",
+    "job",
+    "mongo",
+    "scaled",
+    "distributed"
   ],
   "author": {
     "email": "me@markwylde.com",
@@ -19,6 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "basictap": "^4.3.1",
+    "c8": "^7.13.0",
     "eslint": "^8.38.0",
     "eslint-config-standard": "^17.0.0"
   },
