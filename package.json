@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "description": "This project allows you to schedule jobs to be run across a cluster of NodeJS services, where you want to ensure only 1 job is triggered at a time.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "libindex.d.ts",
   "scripts": {
     "test": "node test"
   },
@@ -19,13 +20,12 @@
   "devDependencies": {
     "basictap": "^4.3.1",
     "eslint": "^8.38.0",
-    "eslint-config-standard": "^17.0.0",
-    "mongodb": "^5.2.0"
+    "eslint-config-standard": "^17.0.0"
   },
   "dependencies": {
-    "uuid": "^9.0.0"
+    "mongodb": "^5.2.0"
   },
   "directories": {
-    "src": "src"
+    "lib": "lib"
   }
 }
