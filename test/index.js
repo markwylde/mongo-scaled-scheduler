@@ -90,3 +90,20 @@ test('createScheduler: scheduled execution with immediate and interval', async (
     scheduler.close();
   };
 });
+
+test('createScheduler: multiple schedules do not run the same job', async (t) => {
+  t.plan(3);
+
+  const scheduler = await createTestScheduler();
+
+  const job = async () => {
+    t.pass('Job executed once');
+  };
+
+  await scheduler.addJob(job, { interval: 1000 });
+  await scheduler.addJob(job, { interval: 1000 });
+
+  setTimeout(() => {
+    scheduler.close();
+  }, 3000);
+});
