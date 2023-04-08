@@ -1,6 +1,6 @@
 {
   "name": "mongo-scaled-scheduler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "This project allows you to schedule jobs to be run across a cluster of NodeJS services, where you want to ensure only 1 job is triggered at a time.",
   "main": "lib/index.js",
