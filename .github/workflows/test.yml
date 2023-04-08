@@ -1,0 +1,36 @@
+name: Node.js Test Runner
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        mongodb-version: ['5.0']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      env:
+        MONGO_PORT: 42069
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-replica-set: test-rs
+        mongodb-port: 42069
+
+    - run: npm install
+
+    - run: npm test
+      env:
+        MONGO_PORT: 42069
