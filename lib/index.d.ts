@@ -6,13 +6,17 @@ interface JobFunction {
 }
 
 interface Scheduler extends EventEmitter {
-  addJob(jobFunction: JobFunction, options?: { time?: number; interval?: number }): Promise<void>;
+  addJob(jobFunction: JobFunction, options?: {
+    id?: string;
+    title?: string;
+    time?: number;
+    interval?: number
+  }): Promise<string>;
+  removeJob(id: string);
   close(): Promise<void>;
 }
 
 interface SchedulerOptions {
-  id?: string;
-  title?: string;
   collection: Collection<any>;
 }
 

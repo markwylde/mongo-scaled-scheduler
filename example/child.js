@@ -12,8 +12,15 @@ const mongoDbUrl = `mongodb://localhost:${mongoPort}/?directConnection=true`;
     collection: db.collection('scheduler')
   });
 
+  scheduler.on('error', (error) => {
+    console.error(error.message);
+  });
+
   scheduler.addJob(async function () {
+    if (Math.random() <= 0.5) {
+      throw new Error('deliberate fail');
+    }
     // Send a message to the parent process with the current child instance number and timestamp
     process.send('ok');
-  }, { interval: 1000 });
+  }, { interval: 2000 });
 })();
