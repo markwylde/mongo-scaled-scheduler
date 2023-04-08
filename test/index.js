@@ -53,6 +53,22 @@ test('createScheduler: duplicate job only runs once', async (t) => {
   };
 });
 
+test('createScheduler: duplicate job only runs once with last config', async (t) => {
+  t.plan(2);
+
+  const scheduler = await createTestScheduler();
+
+  const job = async () => {
+    t.pass('Job executed immediately');
+  };
+  await scheduler.addJob(job, { time: Date.now() + 10000 });
+  await scheduler.addJob(job, { interval: 500 });
+
+  setTimeout(() => {
+    scheduler.close();
+  }, 1000);
+});
+
 test('createScheduler: scheduled execution with time', async (t) => {
   t.plan(1);
 
