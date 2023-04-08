@@ -2,6 +2,7 @@ import test from 'basictap';
 import { MongoClient } from 'mongodb';
 import createScheduler from '../src/index.js';
 
+const mongoPort = process.env.MONGO_PORT || 27017;
 const mongoDbUrl = 'mongodb://localhost:27017/?directConnection=true';
 
 async function createTestScheduler () {

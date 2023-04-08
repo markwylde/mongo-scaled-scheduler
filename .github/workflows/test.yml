@@ -33,5 +33,4 @@ jobs:
 
     - run: npm test
       env:
-        RB_TEST_ENV: github
-        CI: true
+        MONGO_PORT: 42069
