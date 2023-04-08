@@ -1,0 +1,22 @@
+{
+  "name": "mongo-scaled-scheduler",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "basictap": "^4.3.1",
+    "eslint": "^8.38.0",
+    "eslint-config-standard": "^17.0.0",
+    "mongodb": "^5.2.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}

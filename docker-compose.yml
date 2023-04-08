@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  mongodb:
+    image: mongo
+    hostname: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    networks:
+      mongors:
+        ipv4_address: 10.6.0.6
+    volumes:
+      - mongodata:/data/db
+      - ./mongoInit.sh:/scripts/mongoInit.sh
+    healthcheck:
+      test: /scripts/mongoInit.sh
+      interval: 30s
+      start_period: 10s
+    command: ["--replSet", "dbrs", "--bind_ip_all"]
+
+volumes:
+  mongodata:
+
+networks:
+  mongors:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.6.0.0/16
+         gateway: 10.6.0.1
