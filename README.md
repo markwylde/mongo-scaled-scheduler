@@ -84,7 +84,7 @@ scheduler.removeJob(jobId);
 If `id` is not provided, then a `sha256` hash of the stringified function will be used. This should work in most cases, unless you want to have the same function run multiple jobs. In which case, give each job a unique `id`.
 
 ### node crashes during execution
-While a scheduled job is running, it will update the mongo document every second with a `lastPing` of the current time. If there is no ping within `10` seconds, then it is assumed the node process crashes mid execution. In this case, another instance will execute the task immediately.
+While a scheduled job is running, it will update the mongo document every second with a `lastPing` of the current time. If there is no ping within `10` seconds, then it is assumed the node process crashed mid execution and allow the next interval to run.
 
 ### job rejects during execution
 If a job rejects during execution it will not rerun that try, but if there is an interval it will try again at the next interval.

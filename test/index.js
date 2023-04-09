@@ -204,7 +204,7 @@ test('createScheduler: multiple schedules do not run the same job', async (t) =>
 });
 
 test('createScheduler: job throws an error but still runs again', async (t) => {
-  t.plan(4);
+  t.plan(5);
 
   const scheduler = await createTestScheduler();
 
@@ -217,13 +217,12 @@ test('createScheduler: job throws an error but still runs again', async (t) => {
     throw new Error('Job threw an error');
   };
 
-  await scheduler.addJob(job, { interval: 1000 });
+  await scheduler.addJob(job, { interval: 2000 });
 
-  await new Promise(resolve => setTimeout(resolve, 1500));
-
-  return () => {
+  setTimeout(() => {
+    t.pass('waiting to ensure only 1 more run');
     scheduler.close();
-  };
+  }, 4100);
 });
 
 test('createScheduler: job is already running', async (t) => {
@@ -245,30 +244,4 @@ test('createScheduler: job is already running', async (t) => {
     scheduler2.close();
     t.pass();
   }, 2500);
-});
-
-test.skip('createScheduler: retrys - job throws an error and will immediately rerun', async (t) => {
-  t.plan(4);
-
-  const scheduler = await createTestScheduler();
-
-  let runCount = 0;
-  scheduler.on('error', (error) => {
-    t.equal(error.message, 'first run should fail');
-  });
-
-  const job = async () => {
-    runCount = runCount + 1;
-    t.pass('second run should pass');
-    if (runCount === 1) {
-      throw new Error('first run should fail');
-    }
-  };
-
-  await scheduler.addJob(job, { interval: 1000, retryMaximumAttempts: 3 });
-
-  setTimeout(() => {
-    t.pass();
-    scheduler.close();
-  }, 1200);
 });
