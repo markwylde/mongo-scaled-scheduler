@@ -1,11 +1,11 @@
 import { Collection } from 'mongodb';
 import { EventEmitter } from 'events';
 
-interface JobFunction {
+export interface JobFunction {
   (): Promise<void>;
 }
 
-interface Scheduler extends EventEmitter {
+export interface Scheduler extends EventEmitter {
   addJob(jobFunction: JobFunction, options?: {
     id?: string;
     title?: string;
@@ -16,10 +16,10 @@ interface Scheduler extends EventEmitter {
   close(): Promise<void>;
 }
 
-interface SchedulerOptions {
+export interface SchedulerOptions {
   collection: Collection<any>;
 }
 
-declare function createScheduler(options: SchedulerOptions): Promise<Scheduler>;
+export declare function createScheduler(options: SchedulerOptions): Promise<Scheduler>;
 
 export default createScheduler;
