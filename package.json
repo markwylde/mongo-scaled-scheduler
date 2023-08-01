@@ -24,13 +24,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "basictap": "^4.3.1",
-    "c8": "^7.13.0",
-    "eslint": "^8.38.0",
-    "eslint-config-standard": "^17.0.0"
+    "basictap": "^4.3.4",
+    "c8": "^8.0.1",
+    "eslint": "^8.46.0",
+    "eslint-config-standard": "^17.1.0"
   },
   "dependencies": {
-    "mongodb": "^5.2.0"
+    "mongodb": "^5.7.0"
   },
   "directories": {
     "lib": "lib"
